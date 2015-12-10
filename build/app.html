@@ -2,22 +2,39 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Electron Boilerplate</title>
+  <meta charset="utf-8">
+  <title>Electron Boilerplate</title>
 
-    <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
-    <script src="vendor/electron_boilerplate/env_config.js"></script>
-    <script src="vendor/electron_boilerplate/context_menu.js"></script>
-    <script src="vendor/electron_boilerplate/external_links.js"></script>
-    <script type="text/javascript">
-        window.$ = window.jQuery = require('./../node_modules/jquery/');
-    </script>
+  <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
+  <script src="vendor/electron_boilerplate/env_config.js"></script>
+  <script src="vendor/electron_boilerplate/context_menu.js"></script>
+  <script src="vendor/electron_boilerplate/external_links.js"></script>
+  <script type="text/javascript">
+    window.$ = window.jQuery = require('./../node_modules/jquery/');
+  </script>
     <!-- <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script> -->
-    <script src="../app/js/get_json.js"></script>
-    <script src="../app/js/flipster.js"></script>
-    <script>
-    </script>
-    <script src="app.js"></script>
+
+  <script id="album-grid" type="text/x-handlebars-template">
+    <li>
+      <div class="flip-container" onmouseleave="this.classList.remove('hover');"         onclick="this.classList.toggle('hover');">
+        <div class="flipper">
+          <div class="front">
+            <img width="250" height="250" src={{image}}>
+            <p>{{album}}</p>
+          </div>
+          <div class="back blur">
+            <img width="250" height="250" src={{image}}>
+            <p>{{album}}</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </script>
+
+  <script src="../app/js/functions.js"></script>
+  <script src="../app/js/parse_music.js"></script>
+  <script src="../app/js/grid.js"></script>
+  <script src="app.js"></script>
 
 </head>
 
@@ -26,9 +43,12 @@
     <!-- <div id="holder">
         Drag your folder here
     </div> -->
-    <div class="flip">
-        <ul class="flipper">
-        </ul>
+    <div class="grid-container">
+      <ul class="grid animated">
+      </ul>
     </div>
+
+
   </div>
+
 </html>
