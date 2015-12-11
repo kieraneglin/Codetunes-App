@@ -1,9 +1,10 @@
 var request = require('request');
 var fs = require('fs');
 var mm = require('musicmetadata');
-var prettyjson = require('prettyjson');
+var pj = require('prettyjson');
 var homedir = require('homedir');
 var Handlebars = require('handlebars');
+var path = require('path');
 
 const MUSIC_DIR = process.env.HOME + "/Music/test/";
 
@@ -46,7 +47,7 @@ var sendServerRequest = function(url, index, songCollection, result, resolve) {
 
 function albumInfo(songCollection) {
   return new Promise(function(resolve) {
-    console.log(songCollection);
+    //console.log(songCollection);
 
     result = [];
     for (var index in songCollection) {
@@ -55,7 +56,7 @@ function albumInfo(songCollection) {
       var urlSafeAlbum = index.replace(/ /g, '+');
       var url = 'http://warm-cove-9628.herokuapp.com/album/' + urlSafeAlbum +
         '/artist/' + urlSafeArtist;
-      console.log(url);
+      //console.log(url);
 
       sendServerRequest(url, index, songCollection, result, resolve);
     }
@@ -85,17 +86,20 @@ function buildSongCollection(resolve, result, currentResult, requiredTotal) {
 }
 
 
-function getMP3sFromDir(dir) {
+function getMusicFromDir(dir) {
   return new Promise(function(resolve) {
-    var files = fs.readdirSync(dir);
-    var final = [];
-    for (var i = 0; i < files.length; i++) {
-      var extension = files[i].substr((files[i].lastIndexOf('.') + 1));
-      if (extension == 'mp3') {
-        final.push(MUSIC_DIR + files[i]);
+    walk(MUSIC_DIR, function(err, results) {
+      if (err) throw err;
+      var files = results;
+      var final = [];
+      for (var i = 0; i < files.length; i++) {
+        var extension = files[i].substr((files[i].lastIndexOf('.') + 1));
+        if (extension == 'mp3' || extension == 'm4a') {
+          final.push(files[i]);
+        }
       }
-    }
-    resolve(final);
+      resolve(final);
+    });
   });
 }
 
@@ -114,6 +118,40 @@ function buildAlbumsFromSongs(songList) {
     resolve(groupedSongs);
   });
 }
-function createSongListingFromObject(object){
 
+function createTrackListingFromObject(object) {
+  var result = {};
+  for (var index in object) {
+    if ($.isNumeric(index)) {
+      result[index] = []
+      result[index].push({
+        title: object[index].title,
+        filepath: object[index].filepath
+      });
+    }
+  }
+  return result;
 }
+
+var walk = function(dir, done) {
+  var results = [];
+  fs.readdir(dir, function(err, list) {
+    if (err) return done(err);
+    var pending = list.length;
+    if (!pending) return done(null, results);
+    list.forEach(function(file) {
+      file = path.resolve(dir, file);
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          walk(file, function(err, res) {
+            results = results.concat(res);
+            if (!--pending) done(null, results);
+          });
+        } else {
+          results.push(file);
+          if (!--pending) done(null, results);
+        }
+      });
+    });
+  });
+};

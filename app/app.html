@@ -12,18 +12,28 @@
   <script type="text/javascript">
     window.$ = window.jQuery = require('./../node_modules/jquery/');
   </script>
-    <!-- <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script> -->
+  <!-- <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script> -->
 
   <script id="album-grid" type="text/x-handlebars-template">
     <li>
-      <div class="flip-container" onmouseleave="this.classList.remove('hover');"         onclick="this.classList.toggle('hover');">
+      <div class="flip-container" onmouseleave="this.classList.remove('hover');" onclick="this.classList.toggle('hover');">
         <div class="flipper">
           <div class="front">
             <img width="250" height="250" src={{image}}>
             <p>{{album}}</p>
           </div>
           <div class="back blur">
-            <img width="250" height="250" src={{image}}>
+            <div class="tracklist">
+              <div class="song-title">
+                {{#each tracklist}}
+                  {{#each this}}
+                    {{this.title}}
+                    <br>
+                  {{/each}}
+                {{/each}}
+              </div>
+              <img width="250" height="250" src={{image}}>
+            </div>
             <p>{{album}}</p>
           </div>
         </div>
@@ -32,6 +42,7 @@
   </script>
 
   <script src="../app/js/functions.js"></script>
+  <script src="../app/js/player.js"></script>
   <script src="../app/js/parse_music.js"></script>
   <script src="../app/js/grid.js"></script>
   <script src="app.js"></script>

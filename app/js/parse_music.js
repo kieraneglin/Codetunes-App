@@ -1,4 +1,4 @@
-getMP3sFromDir(MUSIC_DIR)
+getMusicFromDir(MUSIC_DIR)
   .then(function(value) {
     // Grab ID3 Info from MP3
     return fileInfo(value);
@@ -14,12 +14,13 @@ getMP3sFromDir(MUSIC_DIR)
   .then(function(value) {
   //  console.log(value);
     $(document).ready(function() {
-      console.log("dom ready!");
+    //  console.log("dom ready!");
       for (var index in value) {
-        console.log(value[index]);
-        var source = $("#album-grid").html();
-        var template = Handlebars.compile(source);
+        console.log(pj.render(createTrackListingFromObject(value[index])));
+        //var source = $("#album-grid").html();
+        var template = Handlebars.compile($("#album-grid").html());
         var albumInfo = {
+          tracklist: createTrackListingFromObject(value[index]),
           image: value[index].art[3]["#text"],
           album: value[index].album
         };
