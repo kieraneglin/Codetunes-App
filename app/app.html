@@ -6,21 +6,13 @@
   <title>Code Tunes</title>
 
 
-  <!-- <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'> -->
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'>
 
   <!-- <link href="../bower_components/sidr/stylesheets/jquery.sidr.dark.css" rel="stylesheet" type="text/css"> -->
   <script type="text/javascript">
     window.$ = window.jQuery = require('jquery');
   </script>
-  <!-- <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script> -->
-  <!-- <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script> -->
-<script type="text/javascript">
-if (window.jQuery) {
-  alert("yes");
-} else {
-  alert("no")
-}
-</script>
+
 </head>
 
 <body>
@@ -33,7 +25,7 @@ if (window.jQuery) {
 
     <div id="loading-icon">
       <!-- <img id="loading-gif" src="../app/assets/loading.gif" alt="" style="display:none"/> -->
-      <video autoplay loop id="loading-gif" src="../app/assets/loading.webm" style="display:none"></video>
+      <video autoplay loop id="loading-gif" src="./assets/loading.webm" style="display:none"></video>
       <h2 id="loading-text" style="display:none;">Analyzing your music</h2>
       <script type="text/javascript">
       var w = window.innerWidth;
@@ -100,19 +92,17 @@ if (window.jQuery) {
   <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
 
   <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
-  <link href="../bower_components/jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css">
-  <link href="../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="./bower_components/jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css">
+  <link href="./bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
   <script src="vendor/electron_boilerplate/env_config.js"></script>
   <script src="vendor/electron_boilerplate/context_menu.js"></script>
-  <script src="vendor/electron_boilerplate/external_links.js"></script>
+   <script src="vendor/electron_boilerplate/external_links.js"></script>
 
-  <script src="../bower_components/jPlayer/dist/jplayer/jquery.jplayer.js"></script>
-  <script src="../bower_components/jPlayer/dist/add-on/jplayer.playlist.js"></script>
-  <script src="../bower_components/freewall/freewall.js"></script>
-  <script src="../bower_components/freewall/plugin/centering.js"></script>
-  <!-- <script src="../bower_components/sidr/jquery.sidr.min.js"></script> -->
-
-  <!-- <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script> -->
+  <script src="./bower_components/jPlayer/dist/jplayer/jquery.jplayer.js"></script>
+  <script src="./bower_components/jPlayer/dist/add-on/jplayer.playlist.js"></script>
+  <script src="./bower_components/freewall/freewall.js"></script>
+  <script src="./bower_components/freewall/plugin/centering.js"></script>
+  <script src="./bower_components/jquery_lazyload/jquery.lazyload.js"></script>
 
   <script id="album-grid" type="text/x-handlebars-template">
     <li class="grid-element">
@@ -135,7 +125,7 @@ if (window.jQuery) {
                       {{this.title}} </a>
                   <br> {{/each}} {{/each}}
                 </div>
-                <img class="blur album-art" width="280" height="280" src={{image}}>
+                <img class="blur album-art" width="300" height="300" src={{image}}>
               </div>
             </div>
             <p class="album-text">{{album}}</p>
@@ -145,10 +135,11 @@ if (window.jQuery) {
       </div>
     </li>
   </script>
-
-  <script src="../app/js/functions.js"></script>
-  <script src="../app/js/player.js"></script>
-  <script src="../app/js/parse_music.js"></script>
+<script type="text/javascript">
+</script>
+  <script src="./js/functions.js"></script>
+  <script src="./js/player.js"></script>
+  <script src="./js/parse_music.js"></script>
   <!-- <script src="../app/js/grid.js"></script> -->
   <script src="app.js"></script>
 

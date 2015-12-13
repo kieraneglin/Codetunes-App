@@ -23,7 +23,6 @@
   app.on('ready', function() {
 
     mainWindow = new BrowserWindow({
-      'node-integration': true,
       x: mainWindowState.x,
       y: mainWindowState.y,
       width: mainWindowState.width,

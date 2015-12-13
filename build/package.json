@@ -1,6 +1,6 @@
 {
-  "name": "codetunes",
-  "productName": "Codetunes",
+  "name": "codetunes-dev",
+  "productName": "Codetunes Dev",
   "identifier": "com.example.codetunes",
   "description": "An app to analyze, fix, and display your music files",
   "version": "0.1.0",

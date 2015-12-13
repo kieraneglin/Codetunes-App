@@ -1,0 +1,15 @@
+{
+  "name": "echojs",
+  "homepage": "https://github.com/toddmotto/echo",
+  "version": "1.7.3",
+  "_release": "1.7.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.7.3",
+    "commit": "3d2ad199e0db81e592af16e60397adc0d6d0c9ad"
+  },
+  "_source": "git://github.com/toddmotto/echo.git",
+  "_target": "~1.7.3",
+  "_originalSource": "echojs",
+  "_direct": true
+}

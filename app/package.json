@@ -8,7 +8,7 @@
   "main": "background.js",
   "config": {
     "target": "development",
-    "license" : "MIT"
+    "license": "MIT"
   },
   "dependencies": {
     "fs": "0.0.2",

@@ -1,0 +1,15 @@
+{
+  "name": "blur",
+  "_cacheHeaders": {
+    "ETag": "\"27d7-4cf6a2f66d934\"",
+    "Last-Modified": "Mon, 26 Nov 2012 18:34:35 GMT",
+    "Content-Length": "10199",
+    "Content-Type": "application/javascript"
+  },
+  "_release": "e-tag:27d7-4cf6",
+  "main": "index.js",
+  "_source": "http://blurjs.com/blur.js",
+  "_target": "*",
+  "_originalSource": "http://blurjs.com/blur.js",
+  "_direct": true
+}
