@@ -1,15 +1,23 @@
 {
-  "name": "electron-boilerplate-dev",
-  "productName": "Electron Boilerplate Dev",
-  "identifier": "com.example.electron-boilerplate",
-  "description": "Starter for your Electron application. Out of the box ready for serious stuff.",
+  "name": "codetunes",
+  "productName": "Codetunes",
+  "identifier": "com.example.codetunes",
+  "description": "An app to analyze, fix, and display your music files",
   "version": "0.1.0",
-  "author": "Mr Gumby <gumby@sillywalks.com>",
+  "author": "Kieran Eglin <kieran.eglin@gmail.com>",
   "main": "background.js",
   "config": {
-    "target": "development"
+    "target": "development",
+    "license": "MIT"
   },
   "dependencies": {
-    "fs-jetpack": "^0.7.0"
+    "fs": "0.0.2",
+    "fs-jetpack": "^0.7.0",
+    "handlebars": "^4.0.5",
+    "jquery": "^2.1.4",
+    "musicmetadata": "^2.0.2",
+    "path": "^0.12.7",
+    "prettyjson": "^1.1.3",
+    "request": "^2.67.0"
   }
 }

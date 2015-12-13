@@ -6,13 +6,21 @@
   <title>Code Tunes</title>
 
 
-  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'> -->
 
   <!-- <link href="../bower_components/sidr/stylesheets/jquery.sidr.dark.css" rel="stylesheet" type="text/css"> -->
   <script type="text/javascript">
-    window.$ = window.jQuery = require('./../node_modules/jquery/');
+    window.$ = window.jQuery = require('jquery');
   </script>
-
+  <!-- <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script> -->
+  <!-- <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script> -->
+<script type="text/javascript">
+if (window.jQuery) {
+  alert("yes");
+} else {
+  alert("no")
+}
+</script>
 </head>
 
 <body>
@@ -22,6 +30,7 @@
       <ul class="grid animated">
       </ul>
     </div>
+
     <div id="loading-icon">
       <!-- <img id="loading-gif" src="../app/assets/loading.gif" alt="" style="display:none"/> -->
       <video autoplay loop id="loading-gif" src="../app/assets/loading.webm" style="display:none"></video>
@@ -90,7 +99,7 @@
   </div>
   <link href="./stylesheets/main.css" rel="stylesheet" type="text/css">
 
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
   <link href="../bower_components/jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.css" rel="stylesheet" type="text/css">
   <link href="../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
   <script src="vendor/electron_boilerplate/env_config.js"></script>

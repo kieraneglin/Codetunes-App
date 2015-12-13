@@ -1,8 +1,9 @@
+// window.$ = window.jQuery = require('jquery');
 var request = require('request');
 var fs = require('fs');
 var mm = require('musicmetadata');
 var pj = require('prettyjson');
-var homedir = require('homedir');
+// var homedir = require('homedir');
 var Handlebars = require('handlebars');
 var path = require('path');
 
