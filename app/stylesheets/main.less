@@ -4,9 +4,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: grey;
-  font-family: sans-serif;
-
+  background: url(../../app/assets/purple-to-blue-bg.jpg) no-repeat center center fixed;
+  font-family: 'Raleway', sans-serif;
 }
 
 a {
@@ -15,7 +14,21 @@ a {
 .image-preload {
   display: none;
 }
-
+#loading-icon{
+  background-color: #2A2826;
+  position: fixed;
+  top: 0;
+  z-index: 4;
+}
+#loading-icon video{
+  position: fixed;
+}
+#loading-text{
+  color: white;
+  text-align: center;
+  font-weight: 100;
+  font-size: 200%
+}
 // .album-art{
 // 	background-size: 500px 500px;
 // }
@@ -32,24 +45,96 @@ a {
 .grid li {
   list-style: none;
 }
-.blur img {
-  width: 248px;
-  height: 248px;
-  transform: scaleX(-1);
-  -webkit-filter: blur(4px) brightness(0.5);
-}
+.grid {
 
-.song-title{
-  color:white;
+  // margin-left: 60px;
+}
+.defined-edges .blur {
+
+  // width: 248px;
+  // height: 248px;
+  transform: scaleX(-1);
+  -webkit-filter: blur(10px) brightness(0.8);
+  margin: -10px;
+}
+.song-title {
+  font-weight: 100;
+  overflow-y: scroll;
+  height: 250px;
+  width: 250px;
+  color: white;
   width: 95%;
-  line-height: 17px;
+  line-height: 25px;
   padding: 10px 5px;
   text-align: center;
-  font-size: 85%;
-  display:inline;
+  font-size: 90%;
+  display: inline;
   position: absolute;
   z-index: 2;
 }
+.song-title a {
+  word-spacing: 4px;
+  text-shadow: 1px 1px 10px black;
+}
+.sidebar {
+  width: 400px;
+  height: 100%;
+  background-color: red;
+  float: right;
+  position: fixed;
+  right: 0;
+  top: 0;
+  overflow-y: scroll;
+  transition: 450ms;
+}
+.album-text {
+  font-family: 'Open Sans', sans-serif;
+  margin: auto;
+  text-align: center;
+  font-size: 95%;
+  color: #292929;
+  font-weight: 300;
+}
+.back .album-text {
+  margin-top: 5px;
+}
+.artist-text {
+  margin: 3px auto;
+  text-align: center;
+  font-size: 75%;
+  font-weight: bold;
+}
+.grid-container {
+  margin-bottom: 100px;
+  margin-left: 50px;
+}
+.defined-edges {
+  overflow: hidden;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.hide-sidebar {
+  width: 0;
+  transition: 450ms;
+}
+@body-with-sidebar-width: calc(~'100% - 400px');
+#main-window {
+  width: 100%;
+}
+.sidebar-open {
+  transition: 450ms;
+  float: left;
+  width: @body-with-sidebar-width !important;
+}
+.sidebar-closed {
+  transition: 450ms;
+}
+
+// .front, .back{
+//
+// }
 /* entire container, keeps perspective */
 .flip-container {
   perspective: 1000;
@@ -57,12 +142,12 @@ a {
 /* flip the pane when hovered */
 .flip-container.hover .flipper {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 .flip-container,
-.front,
-.back {
-  width: 250px;
-  height: 280px;
+.front .back {
+  width: 260px;
+  height: 290px;
 }
 
 /* flip speed goes here */
@@ -75,12 +160,22 @@ a {
 /* hide back of pane during swap */
 .front,
 .back {
+  box-shadow: 0 1px 15px #636363;
+  border-radius: 10px 10px 4px 4px;
+  background-color: #f0f0f0;
+  background-image: url(../../app/assets/handmadepaper.png);
   backface-visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
+  text-align: center;
+  margin-top: 10px;
+  width: 100% !important;
 }
-
+.album-art,
+.defined-edges {
+  border-radius: 4px 4px 0 0;
+}
 /* front pane, placed above back */
 .front {
   z-index: 2;
@@ -91,4 +186,5 @@ a {
 /* back, initially hidden pane */
 .back {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }

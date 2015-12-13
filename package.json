@@ -22,5 +22,8 @@
     "release": "gulp release --env=production",
     "start": "node ./tasks/start",
     "test": "node ./tasks/start --env=test"
+  },
+  "dependencies": {
+    "request": "^2.67.0"
   }
 }

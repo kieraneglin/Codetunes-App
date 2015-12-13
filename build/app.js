@@ -13,6 +13,7 @@
 	var app = require('electron').remote.app;
 	var jetpack = require('fs-jetpack').cwd(app.getAppPath());
 
+	app.commandLine.appendSwitch("disable-renderer-backgrounding");
 	// Holy crap! This is browser window with HTML and stuff, but I can read
 	// here files like it is node.js! Welcome to Electron world :)
 	console.log(jetpack.read('package.json', 'json'));

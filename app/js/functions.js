@@ -6,10 +6,11 @@ var homedir = require('homedir');
 var Handlebars = require('handlebars');
 var path = require('path');
 
-const MUSIC_DIR = process.env.HOME + "/Music/test/";
+var MUSIC_DIR = process.env.HOME + "/Music/test/";
 
 function buildSong(metadata, filepath) {
   return {
+    filetype: filepath.substr((filepath.lastIndexOf('.') + 1)),
     title: metadata.title,
     filepath: filepath,
     artist: metadata.artist[0],
@@ -43,7 +44,7 @@ var sendServerRequest = function(url, index, songCollection, result, resolve) {
       resolve(songCollection);
     }
   });
-}
+};
 
 function albumInfo(songCollection) {
   return new Promise(function(resolve) {
@@ -110,6 +111,7 @@ function buildAlbumsFromSongs(songList) {
     songList.forEach(function(song) {
       groupedSongs[song.album] = groupedSongs[song.album] || [];
       groupedSongs[song.album].push({
+        filetype: song.filetype,
         title: song.title,
         filepath: song.filepath,
         artist: song.artist
@@ -123,8 +125,10 @@ function createTrackListingFromObject(object) {
   var result = {};
   for (var index in object) {
     if ($.isNumeric(index)) {
-      result[index] = []
+      result[index] = [];
+      //console.log("LISTEN", object[index]);
       result[index].push({
+        filetype: object[index].filetype,
         title: object[index].title,
         filepath: object[index].filepath
       });
@@ -155,3 +159,8 @@ var walk = function(dir, done) {
     });
   });
 };
+
+function updateSource(source, src) {
+  source = $(source);
+  source.attr("src", src).appendTo(source.parent());
+}
