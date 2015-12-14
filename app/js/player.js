@@ -20,19 +20,26 @@ $(document).ready(function() {
     $("#loading-text").fadeIn(1500);
   }, 500);
 
+
   jQuery("#jquery_jplayer_1").bind(jQuery.jPlayer.event.loadeddata, function(event) {
     var current = myPlaylist.current,
       playlist = myPlaylist.playlist;
     jQuery.each(playlist, function(index, obj) {
       if (index == current) {
-        console.log(obj);
+        //  console.log(obj);
         $('.jp-current-artist').text(obj.artist);
         $('.jp-current-song').text(obj.title);
+        $('.jp-time-holder').show();
       } // if condition end
     });
   });
 
-
+  // $('body').on('click', '.flip-container', function(){
+  //   $(this).addClass('hover');
+  //   $(this).hover('out', function(){
+  //     $(this).removeClass('hover');
+  //   });
+  // });
   // $('#loading-icon').width($(window).width());
   // $('#loading-icon').height($(window).height());
 
@@ -40,6 +47,7 @@ $(document).ready(function() {
     $('#jp_container_1').toggleClass('sidebar-open sidebar-closed');
     $('#main-window').toggleClass('sidebar-open sidebar-closed');
     $('.sidebar').toggleClass('hide-sidebar');
+    $('.jp-playlist').fadeToggle(100);
 
     // Oh god why - super bad hack to make the layout resize
     setTimeout(function() {
@@ -73,8 +81,25 @@ $(document).ready(function() {
     mp3: MUSIC_DIR + "vicarious.mp3"
   };
   //myPlaylist;
+  $('body').on("click", ".jp-playlist-item-remove", function() {
+    //console.log(makePlaylistItem($(this).data()));
+    setTimeout(function() {
+      test = myPlaylist;
+      if (test.playlist.length == 1) {
+        setTimeout(function() {
+          $('.jp-current-artist').text("");
+          $('.jp-current-song').text("");
+          $('.jp-time-holder').hide();
+        }, 100);
+
+      }
+    }, 100);
+
+  });
   $('body').on("click", ".song", function() {
-    console.log(makePlaylistItem($(this).data()));
+    //console.log(makePlaylistItem($(this).data()));
+    //console.log(myPlaylist);
     myPlaylist.add(makePlaylistItem($(this).data()));
   });
+
 });

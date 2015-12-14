@@ -3,7 +3,7 @@ $(document).ready(function() {
   // alert("Dom Loaded");
   getMusicFromDir(MUSIC_DIR)
     .then(function(value) {
-      //console.log(value);
+      console.log(value);
 
       // Grab ID3 Info from MP3
       return fileInfo(value);
@@ -22,13 +22,14 @@ $(document).ready(function() {
     })
     .then(function(value) {
       // alert("album info");
-
-      //  console.log(value);
-
+      // Sort objects on the keys
+      var ordered = {};
+      Object.keys(value).sort().forEach(function(key) {
+        ordered[key] = value[key];
+      });
+      value = ordered;
       //  console.log("dom ready!");
       for (var index in value) {
-        //console.log(createTrackListingFromObject(value[index]));
-        //var source = $("#album-grid").html();
         var template = Handlebars.compile($("#album-grid").html());
         //console.log(value[index]);
         var albumInfo = {
@@ -79,6 +80,8 @@ $(document).ready(function() {
                 $('#loading-text').fadeOut(500, function() {
                   $('#loading-icon').fadeOut(500, function() {
                     $('#loading-icon').remove();
+
+
                   });
                 });
               });

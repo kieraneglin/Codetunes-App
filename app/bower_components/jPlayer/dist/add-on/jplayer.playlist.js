@@ -302,13 +302,15 @@
 			$(this.cssSelector.playlist).off("click", "a." + this.options.playlistOptions.removeItemClass).on("click", "a." + this.options.playlistOptions.removeItemClass, function(e) {
 				e.preventDefault();
 				var index = $(this).parent().parent().index();
+				//console.log($(this).parent().parent());
 				self.remove(index);
 				self.blur(this);
 			});
 		},
 		_updateControls: function() {
 			if(this.options.playlistOptions.enableRemoveControls) {
-				$(this.cssSelector.playlist + " ." + this.options.playlistOptions.removeItemClass).show();
+				//kieran
+				$(this.cssSelector.playlist + " ." + this.options.playlistOptions.removeItemClass);
 			} else {
 				$(this.cssSelector.playlist + " ." + this.options.playlistOptions.removeItemClass).hide();
 			}

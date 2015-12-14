@@ -16,14 +16,14 @@
 </head>
 
 <body>
-  <div id="main-window" class="">
+  <div id="main-window" class="sidebar-closed ">
 
     <div class="grid-container">
       <ul class="grid animated">
       </ul>
     </div>
 
-    <!-- <div id="loading-icon">
+    <div id="loading-icon">
       <video autoplay loop id="loading-gif" src="./assets/loading.webm" style="display:none"></video>
       <h2 id="loading-text" style="display:none;">Analyzing your music</h2>
       <script type="text/javascript">
@@ -38,7 +38,7 @@
       document.getElementById("loading-gif").style.top = imageTop + "px";
       document.getElementById("loading-text").style.marginTop = textTop + "px";
       </script>
-    </div> -->
+    </div>
     <div class="player-styles">
       <div id="jquery_jplayer_1" class="jp-jplayer"></div>
       <div id="jp_container_1" class="jp-audio " role="application" aria-label="media player">
@@ -47,6 +47,11 @@
             <div id="jp-thumbnail"></div>
             <div class="jp-current-song"></div>
             <div class="jp-current-artist"></div>
+          </div>
+          <div class="jp-time-holder" style="display:none;">
+            <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+            <div class="jp-time-seperator">&#47;</div>
+            <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
           </div>
 
           <div class="jp-gui jp-interface">
@@ -74,14 +79,11 @@
 
             <span class="jp-sidebar-toggle"></span>
 
-            <div class="jp-time-holder">
-              <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-              <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
-            </div>
+
           </div>
 
           <div class="sidebar hide-sidebar">
-            <div class="jp-playlist">
+            <div class="jp-playlist" style="display:none;">
               <ul>
                 <li>&nbsp;</li>
               </ul>
@@ -104,22 +106,23 @@
   <script src="./bower_components/jPlayer/dist/add-on/jplayer.playlist.js"></script>
   <script src="./bower_components/freewall/freewall.js"></script>
   <script src="./bower_components/freewall/plugin/centering.js"></script>
-  <script src="./bower_components/jquery_lazyload/jquery.lazyload.js"></script>
+  <script src="./bower_components/flip/dist/jquery.flip.js"></script>
+  <!-- <script src="./bower_components/blur/index.js"></script> -->
 
   <script id="album-grid" type="text/x-handlebars-template">
     <li class="grid-element">
-      <div class="flip-container" onmouseleave="this.classList.remove('hover');" onclick="this.classList.add('hover'); $('.back').focus();">
-        <!-- <div class="flip-container hover"> -->
+      <div class="flip-container">
+        <!-- <div class="flip-container"> -->
         <div class="flipper">
-          <div class="front">
+          <div class="front face">
             <img class="album-art" width="260" height="260" src="{{image}}">
             <p class="album-text">{{album}}</p>
             <p class="artist-text">{{artist}}</p>
 
           </div>
-          <div class="back">
-            <div class="tracklist">
 
+          <div class="back face">
+            <div class="tracklist">
               <div class="defined-edges">
                 <div class="song-title">
                   {{#each tracklist}} {{#each this}}
@@ -132,7 +135,8 @@
             </div>
             <p class="album-text">{{album}}</p>
             <p class="artist-text">{{artist}}</p>
-          </div>
+
+        </div>
         </div>
       </div>
     </li>

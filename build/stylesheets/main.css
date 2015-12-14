@@ -69,11 +69,13 @@ a {
   margin-top: 8px;
   height: 17px;
   cursor: pointer;
+  -webkit-user-select: none;
 }
 .sidebar {
+  box-shadow: inset 7px 0 19px -8px #5c5c5c;
   width: 400px;
   height: 100%;
-  background-color: red;
+  background-color: #F2F4F5;
   float: right;
   position: fixed;
   right: 0;
@@ -122,55 +124,55 @@ a {
   width: calc(100% - 400px) !important;
 }
 .sidebar-closed {
+  width: 100%;
   transition: 450ms;
 }
-/* entire container, keeps perspective */
+.flip-container {
+  width: 260px;
+  height: 290px;
+  position: relative;
+  margin: 10px auto;
+  z-index: 0;
+}
 .flip-container {
   perspective: 1000;
 }
-/* flip the pane when hovered */
-.flip-container.hover .flipper {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-}
-.flip-container,
-.front .back {
+.flipper {
   width: 260px;
   height: 290px;
-}
-/* flip speed goes here */
-.flipper {
-  transition: 0.6s;
   transform-style: preserve-3d;
-  position: relative;
+  transition: all 400ms linear;
 }
-/* hide back of pane during swap */
-.front,
-.back {
-  box-shadow: 0 1px 15px #636363;
+.flip-container:hover .flipper {
+  transition-delay: 250ms;
+  transform: rotateY(180deg);
+  box-shadow: 0 0 0 transparent;
+}
+.face {
+  position: absolute;
   border-radius: 10px 10px 4px 4px;
   background-color: #f0f0f0;
   background-image: url(../assets/handmadepaper.png);
-  backface-visibility: hidden;
-  position: absolute;
   top: 0;
   left: 0;
   text-align: center;
   margin-top: 10px;
   width: 100% !important;
+  backface-visibility: hidden;
+}
+.face.back {
+  display: block;
+  transition-delay: 100ms;
+  transform: rotateY(180deg);
+  box-sizing: border-box;
+  text-align: center;
 }
 .album-art,
 .defined-edges {
   border-radius: 4px 4px 0 0;
 }
-/* front pane, placed above back */
-.front {
-  z-index: 2;
-  /* for firefox 31 */
-  transform: rotateY(0deg);
-}
-/* back, initially hidden pane */
+.front,
 .back {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  box-shadow: 0 1px 15px #636363;
 }
+/* entire container, keeps perspective */

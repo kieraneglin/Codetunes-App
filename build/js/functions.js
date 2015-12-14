@@ -20,7 +20,7 @@ function buildSong(metadata, filepath) {
     if (metadata.album === "" || metadata.album === undefined) {
       metadata.album = "unknown";
     }
-    console.log("Meta: ", metadata);
+    //console.log("Meta: ", metadata);
 
     return {
       filetype: filepath.substr((filepath.lastIndexOf('.') + 1)),
@@ -35,13 +35,13 @@ function buildSong(metadata, filepath) {
 
 var sendServerRequest = function(url, index, songCollection, result, resolve, album, artist) {
   request(url, function(error, response, body) {
-    console.log(url);
+    //  console.log(url);
 
     var i = 0;
     if (album !== "unknown" && artist !== "unknown") {
       if (!error && (response.statusCode == 200)) {
         response = JSON.parse(body);
-        console.log(response);
+        //  console.log(response);
         if (response.error == 6) {
           songCollection[index].artist = artist;
           songCollection[index].album = album;
@@ -165,6 +165,15 @@ function getMusicFromDir(dir) {
           final.push(files[i]);
         }
       }
+      require('fs').writeFile(
+        './my.json',
+        JSON.stringify(final),
+        function(err) {
+          if (err) {
+            console.error('Crap happens');
+          }
+        }
+      );
       resolve(final);
     });
   });
@@ -230,4 +239,21 @@ var walk = function(dir, done) {
 function updateSource(source, src) {
   source = $(source);
   source.attr("src", src).appendTo(source.parent());
+}
+
+function sortObject(obj) {
+  var arr = [];
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      arr.push({
+        'key': prop,
+        'value': obj[prop]
+      });
+    }
+  }
+  arr.sort(function(a, b) {
+    return a.value - b.value;
+  });
+  //arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
+  return arr; // returns array
 }
