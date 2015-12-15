@@ -60,7 +60,7 @@ var sendServerRequest = function(url, index, songCollection, result, resolve, al
               "#text": "./assets/default-art-thumb.png"
             }, 2, {
               "#text": "./assets/default-art.png"
-            }]
+            }];
           }
 
           //console.log(response);
@@ -101,6 +101,8 @@ var sendServerRequest = function(url, index, songCollection, result, resolve, al
     }
     //console.log(songCollection);
     if (result.length >= expectedLength) {
+      console.log(JSON.stringify(songCollection));
+      console.log(songCollection);
       resolve(songCollection);
     }
   });
@@ -113,7 +115,7 @@ function albumInfo(songCollection) {
     result = [];
     for (var index in songCollection) {
       //console.log(songCollection);
-      var artist = songCollection[index][0].artist;
+      var artist = songCollection[index].songs[0].artist;
       var album = index;
       var urlSafeArtist = artist.replace(/[^\w\s]/gi, '');
       urlSafeArtist = urlSafeArtist.replace(/ /g, '+');
@@ -152,6 +154,30 @@ function buildSongCollection(resolve, result, currentResult, requiredTotal) {
   }
 }
 
+function writeInfoToFiles(info, path) {
+  fs.writeFile(
+    __dirname + path,
+    JSON.stringify(info),
+    function(err) {
+      if (err) {
+        console.error('File could not be saved ', err);
+      } else {
+        console.log("File saved", path);
+      }
+    }
+  );
+}
+
+function arraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length)
+    return false;
+  for (var i = arr1.length; i--;) {
+    if (arr1[i] !== arr2[i])
+      return false;
+  }
+
+  return true;
+}
 
 function getMusicFromDir(dir) {
   return new Promise(function(resolve) {
@@ -165,16 +191,26 @@ function getMusicFromDir(dir) {
           final.push(files[i]);
         }
       }
-      fs.writeFile(
-        './my.json',
-        JSON.stringify(final),
-        function(err) {
-          if (err) {
-            console.error('Crap happens');
+      if (fs.existsSync(__dirname + "/saved-objects/songlist.json")) {
+        fs.readFile(__dirname + "/saved-objects/songlist.json", 'utf8', function(err, contents) {
+          //console.log(JSON.parse(contents));
+          //console.log(final);
+          if (arraysEqual(JSON.parse(contents), final.sort())) {
+            // The songlist we have before is identical
+            console.log("they match");
+            resolve(true);
+          } else {
+            console.log("else");
+            writeInfoToFiles(final.sort(), "/saved-objects/songlist.json");
+            resolve(final);
           }
-        }
-      );
-      resolve(final);
+        });
+      } else {
+        console.log("not running");
+        writeInfoToFiles(final.sort(), "/saved-objects/songlist.json");
+        resolve(final);
+      }
+      //resolve(final);
     });
   });
 }
@@ -184,32 +220,36 @@ function buildAlbumsFromSongs(songList) {
     var groupedSongs = {};
 
     songList.forEach(function(song) {
+      groupedSongs[song.album] = groupedSongs[song.album] || {};
+      groupedSongs[song.album].songs = groupedSongs[song.album].songs || [];
       //groupedSongs[song.album]);
-      groupedSongs[song.album] = groupedSongs[song.album] || [];
-      groupedSongs[song.album].push({
+      groupedSongs[song.album].songs.push({
         filetype: song.filetype,
         title: song.title,
         filepath: song.filepath,
         artist: song.artist
       });
     });
+    //debugger
     resolve(groupedSongs);
   });
 }
 
 function createTrackListingFromObject(object) {
+
   var result = {};
-  for (var index in object) {
-    if ($.isNumeric(index)) {
-      result[index] = [];
-      //console.log("LISTEN", object[index]);
-      result[index].push({
-        filetype: object[index].filetype,
-        title: object[index].title,
-        filepath: object[index].filepath
-      });
-    }
-  }
+  songs = object.songs;
+  songs.forEach(function(song, index) {
+    //debugger;
+    result[index] = [];
+    //console.log("LISTEN", object[index]);
+    result[index].push({
+      filetype: song.filetype,
+      title: song.title,
+      filepath: song.filepath
+    });
+  });
+
   return result;
 }
 

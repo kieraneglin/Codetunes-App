@@ -21,6 +21,8 @@ var paths = {
         './js/**',
         './bower_components/**',
         './assets/**',
+        './saved-objects/**',
+        './**/*.json',
         './**/*.html'
     ],
 }
