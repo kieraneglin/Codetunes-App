@@ -10,6 +10,7 @@
   var BrowserWindow = electron.BrowserWindow;
   var env = require('./vendor/electron_boilerplate/env_config');
   var devHelper = require('./vendor/electron_boilerplate/dev_helper');
+  var menuBar = require('./vendor/electron_boilerplate/menubar');
   var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
   var mainWindow;
@@ -42,8 +43,9 @@
     if (env.name !== 'production') {
       devHelper.setDevMenu();
       mainWindow.openDevTools();
+    } else {
+      menuBar.setMenuBar();
     }
-
     mainWindow.on('close', function() {
       mainWindowState.saveState(mainWindow);
     });

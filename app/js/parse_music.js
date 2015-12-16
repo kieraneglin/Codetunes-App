@@ -3,27 +3,29 @@ $(document).ready(function() {
   // alert("Dom Loaded");
   getMusicFromDir(MUSIC_DIR)
     .then(function(value) {
-      // console.log(value);
+       console.log("getMusicFromDir");
       if (value === true) {
         return true;
       } else {
+        //debugger
         return fileInfo(value);
       }
     })
     .then(function(value) {
-      // alert("fileinfo");
+      //alert("fileinfo");
       console.log("Fileinfo ran");
 
       // Create albums from tracks
       if (value === true) {
         return true;
       } else {
+        //debugger
         return buildAlbumsFromSongs(value);
       }
     })
     .then(function(value) {
       // alert("build albums");
-      console.log("ran");
+      console.log("album form songs ran ");
 
       // Run this into or API to grab any missing info
       if (value === true) {
@@ -39,8 +41,8 @@ $(document).ready(function() {
       return new Promise(function(resolve) {
         if (value === true) {
           console.log("ran");
-          if (fs.existsSync(__dirname + "/saved-objects/final-object.json")) {
-            fs.readFile(__dirname + "/saved-objects/final-object.json", 'utf8', function(err, contents) {
+          if (fs.existsSync(TEMP_DIR + "final-object.json")) {
+            fs.readFile(TEMP_DIR + "final-object.json", 'utf8', function(err, contents) {
               value = JSON.parse(contents);
               window.fromCache = true;
               resolve(value);
@@ -48,7 +50,7 @@ $(document).ready(function() {
           }
 
         } else {
-          writeInfoToFiles(value, "/saved-objects/final-object.json");
+          writeInfoToFiles(value, "final-object.json");
           window.fromCache = false;
           resolve(value);
         }
@@ -95,8 +97,8 @@ $(document).ready(function() {
 
       wall.fitWidth();
       if (window.fromCache === false) {
+      //  $('#loading-text').text("Analyzing your music");
         setTimeout(function() {
-          $('#loading-text').text("Analyzing your music");
           $("#loading-gif").fadeOut(1000, function() {
             $('#loading-gif').remove();
             $('#loading-text').animate({
@@ -125,6 +127,7 @@ $(document).ready(function() {
       }
       // $('#loading-icon').remove();
       console.log("all done!");
+
     }).catch(function(reason) {
       console.log(reason);
     });

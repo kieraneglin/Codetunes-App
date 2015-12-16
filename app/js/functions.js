@@ -8,28 +8,36 @@ var pj = require('prettyjson');
 // var homedir = require('homedir');
 var Handlebars = require('handlebars');
 var path = require('path');
+var app = require('electron').remote.app;
+
 // alert("passed requires");
 
-var MUSIC_DIR = process.env.HOME + "/Music/test/";
+var MUSIC_DIR = process.env.HOME + "/Music/";
+var TEMP_DIR = app.getPath("temp");
+
 //alert(process.env.HOME + "/Music/");
 function buildSong(metadata, filepath) {
-  if (metadata.title !== "" && metadata.title !== undefined) {
-    if (metadata.artist[0] === "" || metadata.artist[0] === undefined) {
-      metadata.artist[0] = "unknown";
-    }
-    if (metadata.album === "" || metadata.album === undefined) {
-      metadata.album = "unknown";
-    }
-    //console.log("Meta: ", metadata);
-
-    return {
-      filetype: filepath.substr((filepath.lastIndexOf('.') + 1)),
-      title: metadata.title,
-      filepath: filepath,
-      artist: metadata.artist[0],
-      album: metadata.album
-    };
+  // debugger
+  if (metadata.title === "" || metadata.title === undefined) {
+    metadata.title = "unknown";
   }
+  if (metadata.artist[0] === "" || metadata.artist[0] === undefined) {
+    metadata.artist[0] = "unknown";
+  }
+  if (metadata.album === "" || metadata.album === undefined) {
+    metadata.album = "unknown";
+  }
+  //debugger
+  console.log("Meta: ", metadata);
+
+  return {
+    filetype: filepath.substr((filepath.lastIndexOf('.') + 1)),
+    title: metadata.title,
+    filepath: filepath,
+    artist: metadata.artist[0],
+    album: metadata.album
+  };
+
 }
 
 
@@ -155,8 +163,10 @@ function buildSongCollection(resolve, result, currentResult, requiredTotal) {
 }
 
 function writeInfoToFiles(info, path) {
+  path = TEMP_DIR + path;
+  //console.log(path);
   fs.writeFile(
-    __dirname + path,
+    path,
     JSON.stringify(info),
     function(err) {
       if (err) {
@@ -191,8 +201,8 @@ function getMusicFromDir(dir) {
           final.push(files[i]);
         }
       }
-      if (fs.existsSync(__dirname + "/saved-objects/songlist.json")) {
-        fs.readFile(__dirname + "/saved-objects/songlist.json", 'utf8', function(err, contents) {
+      if (fs.existsSync(TEMP_DIR + "songlist.json")) {
+        fs.readFile(TEMP_DIR + "songlist.json", 'utf8', function(err, contents) {
           //console.log(JSON.parse(contents));
           //console.log(final);
           if (arraysEqual(JSON.parse(contents), final.sort())) {
@@ -201,13 +211,13 @@ function getMusicFromDir(dir) {
             resolve(true);
           } else {
             console.log("else");
-            writeInfoToFiles(final.sort(), "/saved-objects/songlist.json");
+            writeInfoToFiles(final.sort(), "songlist.json");
             resolve(final);
           }
         });
       } else {
         console.log("not running");
-        writeInfoToFiles(final.sort(), "/saved-objects/songlist.json");
+        writeInfoToFiles(final.sort(), "songlist.json");
         resolve(final);
       }
       //resolve(final);

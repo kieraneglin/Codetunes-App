@@ -25,7 +25,7 @@
 
     <div id="loading-icon">
       <video autoplay loop id="loading-gif" src="./assets/loading.webm" style="display:none"></video>
-      <h2 id="loading-text" style="display:none;"></h2>
+      <h2 id="loading-text" style="display:none;">Analyzing your music</h2>
       <script type="text/javascript">
       var w = window.innerWidth;
       var h = window.innerHeight;
@@ -84,8 +84,14 @@
 
           <div class="sidebar hide-sidebar">
             <div class="jp-playlist" style="display:none;">
+              <h3 class="sidebar-headers">Playlist</h3>
               <ul>
                 <li>&nbsp;</li>
+              </ul>
+            </div>
+            <div class="reccomendations">
+              <h3 class="sidebar-headers">Reccomended Artists</h3>
+              <ul class="recommend">
               </ul>
             </div>
           </div>
@@ -141,12 +147,17 @@
       </div>
     </li>
   </script>
+  <script id="recommended" type="text/x-handlebars-template">
+    <li class="recommend-item">
+      <img src="{{image}}" width="40" height="40">
+      <span>{{artist}}</span>
+    </li>
+  </script>
 <script type="text/javascript">
 </script>
   <script src="./js/functions.js"></script>
   <script src="./js/player.js"></script>
   <script src="./js/parse_music.js"></script>
-  <!-- <script src="../app/js/grid.js"></script> -->
+  <script src="./js/menus.js"></script>
   <script src="app.js"></script>
-
 </html>

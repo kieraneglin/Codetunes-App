@@ -7,11 +7,19 @@ function makePlaylistItem(song) {
     mp3: song.filepath,
     poster: song.thumbnail
   };
-
 }
 
+function addIfNotExist(array, element) {
+  if (array.indexOf(element) == -1) {
+    array.push(element);
+    return array;
+  } else {
+    return array;
+  }
+}
 $(document).ready(function() {
-
+  var userChoice = [];
+  var recommend = [];
 
   // echo.render(); is also available for non-scroll callbacks
 
@@ -33,15 +41,6 @@ $(document).ready(function() {
       } // if condition end
     });
   });
-
-  // $('body').on('click', '.flip-container', function(){
-  //   $(this).addClass('hover');
-  //   $(this).hover('out', function(){
-  //     $(this).removeClass('hover');
-  //   });
-  // });
-  // $('#loading-icon').width($(window).width());
-  // $('#loading-icon').height($(window).height());
 
   $('.jp-sidebar-toggle').click(function() {
     $('#jp_container_1').toggleClass('sidebar-open sidebar-closed');
@@ -76,10 +75,6 @@ $(document).ready(function() {
     keyEnabled: true
   });
 
-  var thing = {
-    title: "test",
-    mp3: MUSIC_DIR + "vicarious.mp3"
-  };
   //myPlaylist;
   $('body').on("click", ".jp-playlist-item-remove", function() {
     //console.log(makePlaylistItem($(this).data()));
@@ -98,6 +93,31 @@ $(document).ready(function() {
   });
   $('body').on("click", ".song", function() {
     //console.log(makePlaylistItem($(this).data()));
+    if (Math.random() < 0.33) {
+      temp = {};
+      var rand = myPlaylist.playlist[Math.floor(Math.random() * myPlaylist.playlist.length)];
+      if (typeof(rand) !== undefined) {
+        addIfNotExist(userChoice, rand.artist);
+        console.log(userChoice);
+        randomArtist = userChoice[Math.floor(Math.random() * userChoice.length)];
+        url = "http://warm-cove-9628.herokuapp.com/similar/" + randomArtist;
+        request(url, function(error, response, body) {
+          response = JSON.parse(body);
+          randomSuggested = response.similarartists.artist[Math.floor(Math.random() * response.similarartists.artist.length)];
+          console.log(response);
+          temp.image = randomSuggested.image[1]["#text"];
+          temp.artist = randomSuggested.name;
+          var template = Handlebars.compile($("#recommended").html());
+          var recommendInfo = {
+            artist: temp.artist,
+            image: temp.image
+          };
+          var html = template(recommendInfo);
+          $('.recommend').append(html);
+        });
+      }
+    }
+
     //console.log(myPlaylist);
     myPlaylist.add(makePlaylistItem($(this).data()));
   });
