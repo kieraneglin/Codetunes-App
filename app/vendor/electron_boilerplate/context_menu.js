@@ -39,7 +39,7 @@
 
 
   document.addEventListener('contextmenu', function(e) {
-
+  //  debugger
 
     e.preventDefault();
     textMenu.popup(remote.getCurrentWindow());

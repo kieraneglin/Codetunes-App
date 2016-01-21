@@ -90,7 +90,9 @@ a {
 }
 .recommend-item {
   border-bottom: 1px solid #4E4E4E;
-  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 345px;
+  overflow-x: scroll;
 }
 .recommend-item img {
   margin-right: 10px;

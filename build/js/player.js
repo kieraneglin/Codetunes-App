@@ -20,7 +20,7 @@ function addIfNotExist(array, element) {
 $(document).ready(function() {
   var userChoice = [];
   var recommend = [];
-
+  var n = 0;
   // echo.render(); is also available for non-scroll callbacks
 
   setTimeout(function() {
@@ -59,6 +59,7 @@ $(document).ready(function() {
   });
   var myPlaylist = new jPlayerPlaylist({
     jPlayer: "#jquery_jplayer_1",
+    autoplay: true,
     cssSelectorAncestor: "#jp_container_1"
   }, [
 
@@ -73,14 +74,15 @@ $(document).ready(function() {
     autoBlur: false,
     smoothPlayBar: true,
     keyEnabled: true
+
   });
 
   //myPlaylist;
   $('body').on("click", ".jp-playlist-item-remove", function() {
     //console.log(makePlaylistItem($(this).data()));
     setTimeout(function() {
-      test = myPlaylist;
-      if (test.playlist.length == 1) {
+      playList = myPlaylist;
+      if (playList.playlist.length == 1) {
         setTimeout(function() {
           $('.jp-current-artist').text("");
           $('.jp-current-song').text("");
@@ -93,33 +95,39 @@ $(document).ready(function() {
   });
   $('body').on("click", ".song", function() {
     //console.log(makePlaylistItem($(this).data()));
-    if (Math.random() < 0.33) {
-      temp = {};
-      var rand = myPlaylist.playlist[Math.floor(Math.random() * myPlaylist.playlist.length)];
-      if (typeof(rand) !== undefined) {
-        addIfNotExist(userChoice, rand.artist);
-        console.log(userChoice);
-        randomArtist = userChoice[Math.floor(Math.random() * userChoice.length)];
-        url = "http://warm-cove-9628.herokuapp.com/similar/" + randomArtist;
-        request(url, function(error, response, body) {
-          response = JSON.parse(body);
-          randomSuggested = response.similarartists.artist[Math.floor(Math.random() * response.similarartists.artist.length)];
-          console.log(response);
-          temp.image = randomSuggested.image[1]["#text"];
-          temp.artist = randomSuggested.name;
-          var template = Handlebars.compile($("#recommended").html());
-          var recommendInfo = {
-            artist: temp.artist,
-            image: temp.image
-          };
-          var html = template(recommendInfo);
-          $('.recommend').append(html);
-        });
+    if (Math.random() >= 0.3) {
+      if (n !== 0) {
+        temp = {};
+        var rand = myPlaylist.playlist[Math.floor(Math.random() * myPlaylist.playlist.length)];
+        if (typeof(rand) !== undefined) {
+          addIfNotExist(userChoice, rand.artist);
+          console.log(userChoice);
+          randomArtist = userChoice[Math.floor(Math.random() * userChoice.length)];
+          url = "http://warm-cove-9628.herokuapp.com/similar/" + randomArtist;
+          request(url, function(error, response, body) {
+            response = JSON.parse(body);
+            randomSuggested = response.similarartists.artist[Math.floor(Math.random() * response.similarartists.artist.length)];
+            console.log(response);
+            temp.image = randomSuggested.image[1]["#text"];
+            temp.artist = randomSuggested.name;
+            var template = Handlebars.compile($("#recommended").html());
+            var recommendInfo = {
+              artist: temp.artist,
+              image: temp.image
+            };
+            var html = template(recommendInfo);
+            $('.recommend').append(html);
+          });
+        }
       }
+      n++;
     }
 
     //console.log(myPlaylist);
     myPlaylist.add(makePlaylistItem($(this).data()));
+    if (myPlaylist.playlist.length == 1) {
+      myPlaylist.play();
+    }
   });
 
 });
